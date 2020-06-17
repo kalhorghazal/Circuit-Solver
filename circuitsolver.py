@@ -744,3 +744,14 @@ class MyWindow:
                 if (elem.kind == 'Wire'):
                     l25.color = 'black'
         d.draw()
+
+
+# TODO: circuit class implementation
+
+if __name__ == "__main__":
+    window = Tk()
+    mywin = MyWindow(window)
+    window.title('Circuit Solver')
+    window.geometry("400x600+10+10")
+    window.mainloop()
+    elements = mywin.elements
