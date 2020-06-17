@@ -21,7 +21,7 @@ Assuming you have pip installed on your computer, run this command in the comman
 pip install -r requirements.txt
 ```
 
-## Using the software
+## Using the Software
 
 Double click on the **circuitsolver.py** file, or run this command in the command line:
 
