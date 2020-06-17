@@ -284,3 +284,463 @@ class MyWindow:
         else:
             elem = element(kind, position)
         self.elements.append(elem)
+
+    def drawCircuit(self):
+        d = schem.Drawing(unit=2, fontsize=12, font='monospace')
+        d1 = d.add(e.DOT)
+        l12 = d.add(e.LINE, d='down', xy = d1.end, color='white')
+        d2 = d.add(e.DOT, xy = l12.end)
+        l23 = d.add(e.LINE, d='down', xy = d2.end, color='white')
+        d3 = d.add(e.DOT, xy = l23.end)
+        l14 = d.add(e.LINE, d='right', xy = d1.end, color='white')
+        d4 = d.add(e.DOT, xy = l14.end)
+        l45 = d.add(e.LINE, d='down', xy = d4.end, color='white')
+        d5 = d.add(e.DOT, xy = l45.end)
+        l56 = d.add(e.LINE, d='down', xy = d5.end, color='white')
+        d6 = d.add(e.DOT, xy = l56.end)
+        l47 = d.add(e.LINE, d='right', xy = d4.end, color='white')
+        d7 = d.add(e.DOT, xy = l47.end)
+        l78 = d.add(e.LINE, d='down', xy = d7.end, color='white')
+        d8 = d.add(e.DOT, xy = l78.end)
+        l89 = d.add(e.LINE, d='down', xy = d8.end, color='white')
+        d9 = d.add(e.DOT, xy = l89.end)
+        l25 = d.add(e.LINE, d='right', xy = d2.end, color='white')
+        l58 = d.add(e.LINE, d='right', xy = d5.end, color='white')
+        l36 = d.add(e.LINE, d='right', xy = d3.end, color='white')
+        l69 = d.add(e.LINE, d='right', xy = d6.end, color='white')
+        gnd = d.add(e.GND, d='right', xy = l56.end, color='black')
+
+        for elem in self.elements:
+            if elem.position == '12':
+                if (elem.kind == 'Resistor'):
+                    R1 = d.add(e.RES, d='down', label=str(elem.value)+'$\Omega$', xy = l12.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='down', label=str(elem.value)+'F', xy = l12.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='down', label=str(elem.value)+'H', xy = l12.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S1 = d.add(e.SOURCE_V, d='down', label=str(elem.value)+'V', xy = l12.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S1 = d.add(e.SOURCE_I, d='down', label=str(elem.value)+'A', xy = l12.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S1 = d.add(e.SOURCE_CONT_V, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l12.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S1 = d.add(e.SOURCE_CONT_I, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l12.start)
+                l12.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l12.color = 'black'
+            if elem.position == '21':
+                if (elem.kind == 'Resistor'):
+                    R1 = d.add(e.RES, d='up', label=str(elem.value)+'$\Omega$', xy = l12.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='up', label=str(elem.value)+'F', xy = l12.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='up', label=str(elem.value)+'H', xy = l12.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S1 = d.add(e.SOURCE_V, d='up', label=str(elem.value)+'V', xy = l12.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S1 = d.add(e.SOURCE_I, d='up', label=str(elem.value)+'A', xy = l12.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S1 = d.add(e.SOURCE_CONT_V, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l12.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S1 = d.add(e.SOURCE_CONT_I, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l12.end)
+                l12.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l12.color = 'black'
+            elif elem.position == '23':
+                if (elem.kind == 'Resistor'):
+                    R2 = d.add(e.RES, d='down', label=str(elem.value)+'$\Omega$', xy = l23.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='down', label=str(elem.value)+'F', xy = l23.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='down', label=str(elem.value)+'H', xy = l23.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S2 = d.add(e.SOURCE_V, d='down', label=str(elem.value)+'V', xy = l23.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S2 = d.add(e.SOURCE_I, d='down', label=str(elem.value)+'A', xy = l23.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S2 = d.add(e.SOURCE_CONT_V, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l23.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S2 = d.add(e.SOURCE_CONT_I, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l23.start)
+                l23.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l23.color = 'black'
+            elif elem.position == '32':
+                if (elem.kind == 'Resistor'):
+                    R2 = d.add(e.RES, d='up', label=str(elem.value)+'$\Omega$', xy = l23.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='up', label=str(elem.value)+'F', xy = l23.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='up', label=str(elem.value)+'H', xy = l23.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S2 = d.add(e.SOURCE_V, d='up', label=str(elem.value)+'V', xy = l23.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S2 = d.add(e.SOURCE_I, d='up', label=str(elem.value)+'A', xy = l23.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S2 = d.add(e.SOURCE_CONT_V, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l23.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S2 = d.add(e.SOURCE_CONT_I, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l23.end)
+                l23.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l23.color = 'black'
+            elif elem.position == '58':
+                if (elem.kind == 'Resistor'):
+                    R3 = d.add(e.RES, d='right', label=str(elem.value)+'$\Omega$', xy = l58.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='right', label=str(elem.value)+'F', xy = l58.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='right', label=str(elem.value)+'H', xy = l58.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S3 = d.add(e.SOURCE_V, d='right', label=str(elem.value)+'V', xy = l58.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S3 = d.add(e.SOURCE_I, d='right', label=str(elem.value)+'A', xy = l58.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S3 = d.add(e.SOURCE_CONT_V, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l58.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S3 = d.add(e.SOURCE_CONT_I, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l58.start)
+                l58.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l58.color = 'black'
+            elif elem.position == '85':
+                if (elem.kind == 'Resistor'):
+                    R3 = d.add(e.RES, d='left', label=str(elem.value)+'$\Omega$', xy = l58.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='left', label=str(elem.value)+'F', xy = l58.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='left', label=str(elem.value)+'H', xy = l58.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S3 = d.add(e.SOURCE_V, d='left', label=str(elem.value)+'V', xy = l58.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S3 = d.add(e.SOURCE_I, d='left', label=str(elem.value)+'A', xy = l58.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S3 = d.add(e.SOURCE_CONT_V, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l58.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S3 = d.add(e.SOURCE_CONT_I, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l58.end)
+                l58.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l58.color = 'black'
+            elif elem.position == '14':
+                if (elem.kind == 'Resistor'):
+                    R4 = d.add(e.RES, d='right', label=str(elem.value)+'$\Omega$', xy = l14.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='right', label=str(elem.value)+'F', xy = l14.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='right', label=str(elem.value)+'H', xy = l14.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S4 = d.add(e.SOURCE_V, d='right', label=str(elem.value)+'V', xy = l14.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S4 = d.add(e.SOURCE_I, d='right', label=str(elem.value)+'A', xy = l14.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S4 = d.add(e.SOURCE_CONT_V, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l14.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S4 = d.add(e.SOURCE_CONT_I, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l14.start)
+                l14.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l14.color = 'black'
+            elif elem.position == '41':
+                if (elem.kind == 'Resistor'):
+                    R4 = d.add(e.RES, d='left', label=str(elem.value)+'$\Omega$', xy = l14.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='left', label=str(elem.value)+'F', xy = l14.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='left', label=str(elem.value)+'H', xy = l14.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S4 = d.add(e.SOURCE_V, d='left', label=str(elem.value)+'V', xy = l14.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S4 = d.add(e.SOURCE_I, d='left', label=str(elem.value)+'A', xy = l14.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S4 = d.add(e.SOURCE_CONT_V, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l14.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S4 = d.add(e.SOURCE_CONT_I, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l14.end)
+                l14.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l14.color = 'black'
+            elif elem.position == '47':
+                if (elem.kind == 'Resistor'):
+                    R5 = d.add(e.RES, d='right', label=str(elem.value)+'$\Omega$', xy = l47.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='right', label=str(elem.value)+'F', xy = l47.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='right', label=str(elem.value)+'H', xy = l47.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S5 = d.add(e.SOURCE_V, d='right', label=str(elem.value)+'V', xy = l47.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S5 = d.add(e.SOURCE_I, d='right', label=str(elem.value)+'A', xy = l47.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S5 = d.add(e.SOURCE_CONT_V, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l47.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S5 = d.add(e.SOURCE_CONT_I, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l47.start)
+                l47.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l47.color = 'black'
+            elif elem.position == '74':
+                if (elem.kind == 'Resistor'):
+                    R5 = d.add(e.RES, d='left', label=str(elem.value)+'$\Omega$', xy = l47.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='left', label=str(elem.value)+'F', xy = l47.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='left', label=str(elem.value)+'H', xy = l47.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S5 = d.add(e.SOURCE_V, d='left', label=str(elem.value)+'V', xy = l47.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S5 = d.add(e.SOURCE_I, d='left', label=str(elem.value)+'A', xy = l47.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S5 = d.add(e.SOURCE_CONT_V, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l47.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S5 = d.add(e.SOURCE_CONT_I, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l47.end)
+                l47.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l47.color = 'black'
+            elif elem.position == '45':
+                if (elem.kind == 'Resistor'):
+                    R6 = d.add(e.RES, d='down', label=str(elem.value)+'$\Omega$', xy = l45.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='down', label=str(elem.value)+'F', xy = l45.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='down', label=str(elem.value)+'H', xy = l45.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S6 = d.add(e.SOURCE_V, d='down', label=str(elem.value)+'V', xy = l45.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S6 = d.add(e.SOURCE_I, d='down', label=str(elem.value)+'A', xy = l45.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S6 = d.add(e.SOURCE_CONT_V, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l45.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S6 = d.add(e.SOURCE_CONT_I, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l45.start)
+                l45.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l45.color = 'black'
+            elif elem.position == '54':
+                if (elem.kind == 'Resistor'):
+                    R6 = d.add(e.RES, d='up', label=str(elem.value)+'$\Omega$', xy = l45.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='up', label=str(elem.value)+'F', xy = l45.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='up', label=str(elem.value)+'H', xy = l45.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S6 = d.add(e.SOURCE_V, d='up', label=str(elem.value)+'V', xy = l45.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S6 = d.add(e.SOURCE_I, d='up', label=str(elem.value)+'A', xy = l45.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S6 = d.add(e.SOURCE_CONT_V, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l45.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S6 = d.add(e.SOURCE_CONT_I, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l45.end)
+                l45.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l45.color = 'black'
+            elif elem.position == '56':
+                if (elem.kind == 'Resistor'):
+                    R7 = d.add(e.RES, d='down', label=str(elem.value)+'$\Omega$', xy = l56.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='down', label=str(elem.value)+'F', xy = l56.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='down', label=str(elem.value)+'H', xy = l56.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S7 = d.add(e.SOURCE_V, d='down', label=str(elem.value)+'V', xy = l56.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S7 = d.add(e.SOURCE_I, d='down', label=str(elem.value)+'A', xy = l56.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S7 = d.add(e.SOURCE_CONT_V, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l56.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S7 = d.add(e.SOURCE_CONT_I, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l56.start)
+                l56.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l56.color = 'black'
+            elif elem.position == '65':
+                if (elem.kind == 'Resistor'):
+                    R7 = d.add(e.RES, d='up', label=str(elem.value)+'$\Omega$', xy = l56.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='up', label=str(elem.value)+'F', xy = l56.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='up', label=str(elem.value)+'H', xy = l56.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S7 = d.add(e.SOURCE_V, d='up', label=str(elem.value)+'V', xy = l56.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S7 = d.add(e.SOURCE_I, d='up', label=str(elem.value)+'A', xy = l56.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S7 = d.add(e.SOURCE_CONT_V, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l56.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S7 = d.add(e.SOURCE_CONT_I, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l56.end)
+                l56.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l56.color = 'black'
+            elif elem.position == '78':
+                if (elem.kind == 'Resistor'):
+                    R8 = d.add(e.RES, d='down', label=str(elem.value)+'$\Omega$', xy = l78.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='down', label=str(elem.value)+'F', xy = l78.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='down', label=str(elem.value)+'H', xy = l78.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S8 = d.add(e.SOURCE_V, d='down', label=str(elem.value)+'V', xy = l78.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S8 = d.add(e.SOURCE_I, d='down', label=str(elem.value)+'A', xy = l78.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S8 = d.add(e.SOURCE_CONT_V, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l78.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S8 = d.add(e.SOURCE_CONT_I, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l78.start)
+                l78.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l78.color = 'black'
+            elif elem.position == '87':
+                if (elem.kind == 'Resistor'):
+                    R8 = d.add(e.RES, d='up', label=str(elem.value)+'$\Omega$', xy = l78.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='up', label=str(elem.value)+'F', xy = l78.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='up', label=str(elem.value)+'H', xy = l78.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S8 = d.add(e.SOURCE_V, d='up', label=str(elem.value)+'V', xy = l78.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S8 = d.add(e.SOURCE_I, d='up', label=str(elem.value)+'A', xy = l78.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S8 = d.add(e.SOURCE_CONT_V, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l78.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S8 = d.add(e.SOURCE_CONT_I, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l78.end)
+                l78.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l78.color = 'black'
+            elif elem.position == '36':
+                if (elem.kind == 'Resistor'):
+                    R9 = d.add(e.RES, d='right', label=str(elem.value)+'$\Omega$', xy = l36.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='right', label=str(elem.value)+'F', xy = l36.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='right', label=str(elem.value)+'H', xy = l36.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S9 = d.add(e.SOURCE_V, d='right', label=str(elem.value)+'V', xy = l36.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S9 = d.add(e.SOURCE_I, d='right', label=str(elem.value)+'A', xy = l36.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S9 = d.add(e.SOURCE_CONT_V, d='right', label=str(elem.value)+'V', xy = l36.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S9 = d.add(e.SOURCE_CONT_I, d='right', label=str(elem.value)+'A', xy = l36.start)
+                l36.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l36.color = 'black'
+            elif elem.position == '63':
+                if (elem.kind == 'Resistor'):
+                    R9 = d.add(e.RES, d='left', label=str(elem.value)+'$\Omega$', xy = l36.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='left', label=str(elem.value)+'F', xy = l36.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='left', label=str(elem.value)+'H', xy = l36.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S9 = d.add(e.SOURCE_V, d='left', label=str(elem.value)+'V', xy = l36.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S9 = d.add(e.SOURCE_I, d='left', label=str(elem.value)+'A', xy = l36.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S9 = d.add(e.SOURCE_CONT_V, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l36.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S9 = d.add(e.SOURCE_CONT_I, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l36.end)
+                l36.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l36.color = 'black'
+            elif elem.position == '69':
+                if (elem.kind == 'Resistor'):
+                    R10 = d.add(e.RES, d='right', label=str(elem.value)+'$\Omega$', xy = l69.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='right', label=str(elem.value)+'F', xy = l69.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='right', label=str(elem.value)+'H', xy = l69.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S10 = d.add(e.SOURCE_V, d='right', label=str(elem.value)+'V', xy = l69.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S10 = d.add(e.SOURCE_I, d='right', label=str(elem.value)+'A', xy = l69.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S10 = d.add(e.SOURCE_CONT_V, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l69.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S10 = d.add(e.SOURCE_CONT_I, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l69.start)
+                l69.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l69.color = 'black'
+            elif elem.position == '96':
+                if (elem.kind == 'Resistor'):
+                    R10 = d.add(e.RES, d='left', label=str(elem.value)+'$\Omega$', xy = l69.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='left', label=str(elem.value)+'F', xy = l69.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='left', label=str(elem.value)+'H', xy = l69.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S10 = d.add(e.SOURCE_V, d='left', label=str(elem.value)+'V', xy = l69.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S10 = d.add(e.SOURCE_I, d='left', label=str(elem.value)+'A', xy = l69.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S10 = d.add(e.SOURCE_CONT_V, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l69.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S10 = d.add(e.SOURCE_CONT_I, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l69.end)
+                l69.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l69.color = 'black'
+            elif elem.position == '89':
+                if (elem.kind == 'Resistor'):
+                    R11 = d.add(e.RES, d='down', label=str(elem.value)+'$\Omega$', xy = l89.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='down', label=str(elem.value)+'F', xy = l89.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='down', label=str(elem.value)+'H', xy = l89.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S11 = d.add(e.SOURCE_V, d='down', label=str(elem.value)+'V', xy = l89.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S11 = d.add(e.SOURCE_I, d='down', label=str(elem.value)+'A', xy = l89.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S11 = d.add(e.SOURCE_CONT_V, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l89.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S11 = d.add(e.SOURCE_CONT_I, d='down', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l89.start)
+                l89.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l89.color = 'black'
+            elif elem.position == '98':
+                if (elem.kind == 'Resistor'):
+                    R11 = d.add(e.RES, d='up', label=str(elem.value)+'$\Omega$', xy = l89.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='up', label=str(elem.value)+'F', xy = l89.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='up', label=str(elem.value)+'H', xy = l89.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S11 = d.add(e.SOURCE_V, d='up', label=str(elem.value)+'V', xy = l89.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S11 = d.add(e.SOURCE_I, d='up', label=str(elem.value)+'A', xy = l89.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S11 = d.add(e.SOURCE_CONT_V, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l89.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S11 = d.add(e.SOURCE_CONT_I, d='up', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l89.end)
+                l89.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l89.color = 'black'
+            elif elem.position == '25':
+                if (elem.kind == 'Resistor'):
+                    R12 = d.add(e.RES, d='right', label=str(elem.value)+'$\Omega$', xy = l25.start)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='right', label=str(elem.value)+'F', xy = l25.start)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='right', label=str(elem.value)+'H', xy = l25.start)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S12 = d.add(e.SOURCE_V, d='right', label=str(elem.value)+'V', xy = l25.start)
+                elif (elem.kind == 'Current Independent Source'):
+                    S12 = d.add(e.SOURCE_I, d='right', label=str(elem.value)+'A', xy = l25.start)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S12 = d.add(e.SOURCE_CONT_V, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l25.start)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S12 = d.add(e.SOURCE_CONT_I, d='right', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l25.start)
+                l25.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l25.color = 'black'
+            elif elem.position == '52':
+                if (elem.kind == 'Resistor'):
+                    R12 = d.add(e.RES, d='left', label=str(elem.value)+'$\Omega$', xy = l25.end)
+                elif (elem.kind == 'Capacitor'):
+                    R1 = d.add(e.CAP, d='left', label=str(elem.value)+'F', xy = l25.end)
+                elif (elem.kind == 'Inductor'):
+                    R1 = d.add(e.INDUCTOR, d='left', label=str(elem.value)+'H', xy = l25.end)
+                elif (elem.kind == 'Voltage Independent Source'):
+                    S12 = d.add(e.SOURCE_V, d='left', label=str(elem.value)+'V', xy = l25.end)
+                elif (elem.kind == 'Current Independent Source'):
+                    S12 = d.add(e.SOURCE_I, d='left', label=str(elem.value)+'A', xy = l25.end)
+                elif (elem.kind == 'Voltage Dependent Source'):
+                    S12 = d.add(e.SOURCE_CONT_V, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l25.end)
+                elif (elem.kind == 'Current Dependent Source'):
+                    S12 = d.add(e.SOURCE_CONT_I, d='left', label=str(elem.a)+elem.dtype+elem.dposition+' + '+str(elem.b), xy = l25.end)
+                l25.color = 'none'
+                if (elem.kind == 'Wire'):
+                    l25.color = 'black'
+        d.draw()
