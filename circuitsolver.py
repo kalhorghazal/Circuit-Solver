@@ -8,3 +8,13 @@ from tkinter import scrolledtext
 import sympy
 import numpy as np
 from IPython.display import display, Math
+
+class element:
+    def __init__(self, kind, position, value = 0, dposition = "", dtype = "", a = 0, b = 0):
+        self.kind = kind
+        self.position = position
+        self.value = value
+        self.dposition = dposition
+        self.dtype = dtype
+        self.a = a
+        self.b = b
