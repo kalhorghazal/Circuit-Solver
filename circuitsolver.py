@@ -105,3 +105,52 @@ class MyWindow:
                 mycircuit.addL('L'+ elem.position, int(elem.position[0]), int(elem.position[1]), elem.value)
 
             self.results = mycircuit.solve()
+
+    def circuit_is_lc(self):
+        for elem in self.elements:
+            if elem.kind == "Capacitor" or elem.kind == "Inductor":
+                return True
+        return False
+
+    def analyze(self):
+        self.b2.place(x=-100, y=-500)
+        self.lbl6.place(x=-100, y=-350)
+        self.lbl7.place(x=-100, y=-400)
+        self.lbl1.place(x=-100, y=-350)
+        self.lbl2.place(x=-100, y=-400)
+        self.lbl8.place(x=-100, y=-300)
+        self.r1.place(x=-100, y=-300)
+        self.r2.place(x=-200, y=-300)
+        self.Start_Point2.place(x=-200, y=-350)
+        self.End_Point2.place(x=-200, y=-400)
+        self.Start_Point.place(x=-200, y=-350)
+        self.End_Point.place(x=-200, y=-400)
+        self.lbl9.place(x=-100, y=-450)
+        self.lbl10.place(x=230, y=-450)
+        self.a.place(x=-200, y=-450, width=30)
+        self.b.place(x=-300, y=-450, width=30)
+        self.Value.place(x=-200, y=-200)
+        self.lbl4.place(x=-100, y=-200)
+        self.lbl5.place(x=-100, y=-200)
+        self.cb.place(x=-100, y=-200)
+        self.b1.place(x=-300, y=-500)
+        self.b2.place(x=-300, y=-500)
+        self.b3.place(x=-300, y=-500)
+        self.b4.place(x=-300, y=-500)
+        self.solvecircuit()
+        for result in self.results:
+            self.txt.insert(INSERT,result)
+            self.txt.insert(INSERT, " = ")
+            self.txt.insert(INSERT,self.results[result])
+            self.txt.insert(INSERT,'\n')
+            if self.circuit_is_lc():
+                numer, denom = self.results[result].as_numer_denom()
+                zeros = sympy.roots(numer)
+                poles = sympy.roots(denom)
+                self.txt.insert(INSERT, "zeros = ")
+                self.txt.insert(INSERT,zeros)
+                self.txt.insert(INSERT,'\n')
+                self.txt.insert(INSERT, "poles = ")
+                self.txt.insert(INSERT,poles)
+                self.txt.insert(INSERT,'\n')
+        self.txt.place(x=20, y=20)
