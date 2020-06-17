@@ -42,7 +42,7 @@ python circuitsolver.py
 * [Tkinter](https://github.com/python/cpython/tree/3.8/Lib/tkinter) - The graphical library
 * [Sympy](https://www.sympy.org/en/index.html) - The algebra library
 
-## Contributors
+## Authors
 
 * [**Mobina Shahbandeh**](https://github.com/mobinashb)
 * [**Ghazal Kalhor**](https://github.com/kalhorghazal)
