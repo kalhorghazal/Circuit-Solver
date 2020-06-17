@@ -58,3 +58,50 @@ class MyWindow:
         self.txt = scrolledtext.ScrolledText(win)
         self.elements = []
         self.results = []
+
+    def solvecircuit(self):
+        mycircuit = circuit()
+        mycircuit.addR('R0', 0, 6, 0)
+        for elem in self.elements:
+            if elem.kind == "Wire":
+                mycircuit.addR('R'+ elem.position, int(elem.position[0]), int(elem.position[1]), 0)
+
+            elif elem.kind == "Resistor":
+                mycircuit.addR('R'+ elem.position, int(elem.position[0]), int(elem.position[1]), elem.value)
+
+            elif elem.kind == "Voltage Independent Source":
+                mycircuit.addV('V'+ elem.position, int(elem.position[0]), int(elem.position[1]), elem.value)
+
+            elif elem.kind == "Current Independent Source":
+                mycircuit.addI('I'+ elem.position, int(elem.position[0]), int(elem.position[1]), elem.value)
+
+            elif elem.kind == "Voltage Dependent Source":
+                if elem.dtype == "V":
+                    mycircuit.addVM('VM'+ elem.dposition, int(elem.dposition[0]), int(elem.dposition[1]))
+                    mycircuit.addCVS('VD'+ elem.position, int(elem.position[0]), int(elem.position[1]), 'VM'+ elem.dposition, elem.a)
+                else:
+                    mycircuit.addIM('IM'+ elem.dposition, int(elem.dposition[0]), int(elem.dposition[1]))
+                    mycircuit.addCVS('VD'+ elem.position, int(elem.position[0]), int(elem.position[1]), 'IM'+ elem.dposition, elem.a)
+
+                if  elem.b != 0:
+                    mycircuit.addV('V'+ elem.position, int(elem.position[0]), int(elem.position[1]), elem.b)
+
+            elif elem.kind == "Current Dependent Source":
+                if elem.dtype == "V":
+                    mycircuit.addVM('VM'+ elem.dposition, int(elem.dposition[0]), int(elem.dposition[1]))
+                    mycircuit.addCIS('VD'+ elem.position, int(elem.position[0]), int(elem.position[1]), 'VM'+ elem.dposition, elem.a)
+                else:
+                    mycircuit.addIM('IM'+ elem.dposition, int(elem.dposition[0]), int(elem.dposition[1]))
+                    mycircuit.addCIS('VD'+ elem.position, int(elem.position[0]), int(elem.position[1]), 'IM'+ elem.dposition, elem.a)
+
+                if  elem.b != 0:
+                    mycircuit.addI('I'+ elem.position, int(elem.position[0]), int(elem.position[1]), elem.b)
+
+            # Bonus part
+            elif elem.kind == "Capacitor":
+                mycircuit.addC('C'+ elem.position, int(elem.position[0]), int(elem.position[1]), elem.value)
+
+            elif elem.kind == "Inductor":
+                mycircuit.addL('L'+ elem.position, int(elem.position[0]), int(elem.position[1]), elem.value)
+
+            self.results = mycircuit.solve()
