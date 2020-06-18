@@ -899,6 +899,48 @@ class circuit():
                 print('Current supply',name,'added between nodes',node1,'and',node2)
         return sy
 
+    def addVM(self,name,node1,node2):
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'vm'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['sy'] = sy
+
+        self.name[sy] = name
+
+        self.symbol[name] = sy
+
+        self.components.append(dict)
+
+        self.meas[name] = dict
+        if verbose:
+            print('Voltage measurement',name,'added between nodes',node1,'and',node2)
+        return sy
+
+    def addIM(self,name,node1,node2):
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'im'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['sy'] = sy
+
+        self.name[sy] = name
+
+        self.symbol[name] = sy
+
+        self.components.append(dict)
+
+        self.meas[name] = dict
+        if verbose:
+            print('Current measurement',name,'added between nodes',node1,'and',node2)
+        return sy
+
 # TODO: circuit class functions
 
 if __name__ == "__main__":
