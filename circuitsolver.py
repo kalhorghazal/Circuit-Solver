@@ -1110,6 +1110,52 @@ class circuit():
             eq = eq - im['sy']
         return eq
 
+    def _addKCLequations(self):
+        if verbose:
+            print('Creating KCL equations')
+        for node in self.nodeList:
+            if node != 0:
+                equation = sympy.Rational(0,1)
+                for cm in self.components:
+                    if cm['k'] == 'r':
+                        equation = self._addRtoNode(cm,equation,node)
+                    elif cm['k'] == 'c':
+                        equation = self._addCtoNode(cm,equation,node)
+                    elif cm['k'] == 'l':
+                        equation = self._addLtoNode(cm,equation,node)
+                    elif cm['k'] == 'vs' or cm['k'] == 'cvs':
+                        equation = self._addVtoNode(cm,equation,node)
+                    elif cm['k'] == 'is' or cm['k'] == 'cis':
+                        equation = self._addItoNode(cm,equation,node)
+                    elif cm['k'] == 'im':
+                        equation = self._addIMtoNode(cm,equation,node)
+                self.equations.append(equation)
+                if verbose:
+                    print('    ',equation)
+
+    def _substEqs(self,oldS,newS):
+        newList = []
+        for eq in self.equations:
+            newList.append(eq.subs(oldS,newS))
+        self.equations = newList
+
+
+    def _addVequations(self):
+        if verbose:
+            print('Adding V source equations')
+        for cm in self.components:
+            if cm['k']=='vs' or cm['k']=='cvs':
+
+                self.unknowns.add(cm['isy'])
+                n1 = cm['n1']
+                n2 = cm['n2']
+                if   n1 == 0:
+                    self.equations.append(sympy.Eq(cm['sy'],-self.nodeVars[n2]))
+                elif n2 == 0:
+                    self.equations.append(sympy.Eq(cm['sy'],self.nodeVars[n1]))
+                else:
+                    self.equations.append(sympy.Eq(cm['sy'],self.nodeVars[n1]-self.nodeVars[n2]))
+
 # TODO: circuit class functions
 
 if __name__ == "__main__":
