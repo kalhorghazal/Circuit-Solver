@@ -747,6 +747,7 @@ class MyWindow:
 
 
 verbose = False
+
 class circuit():
     def __init__(self):
         self.components = []
@@ -1208,6 +1209,34 @@ class circuit():
         for cm in self.components:
             if cm['k'] == 'cvs' or cm['k'] == 'cis':
                 self._substEqs(cm['sy'],cm['sy']*cm['ctr']['sy'])
+
+
+    def _showEquations(self):
+        print('Circuit equations:')
+        for eq in self.equations:
+            print('    ',eq)
+
+    def _solveEquations(self):
+        if verbose:
+            print('Unknowns:',self.unknowns)
+        self.sSolution = sympy.solve(self.equations,list(self.unknowns))
+
+    def _nameSolution(self):
+        self.solution = {}
+        for sym in self.sSolution:
+            key = self.name[sym]
+            self.solution[key] = self.sSolution[sym]
+        if verbose:
+            print('Circuit solution:')
+            print('    ',self.solution)
+
+    def _substituteSolution(self):
+        self.particular = {}
+        for key in self.solution:
+            self.particular[key] = self.solution[key].subs(self.subsDic)
+        if verbose:
+            print('Circuit solution with substitutions:')
+            print('    ',self.particular)
 
 # TODO: circuit class functions
 
