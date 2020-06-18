@@ -1262,6 +1262,13 @@ class circuit():
     def subs(self):
         return self.particular
 
+def expr2func(expr,*vars):
+    return sympy.lambdify(vars,expr)
+
+def evalList(expr,var,set):
+    f = expr2func(expr,var)
+    return np.array(f(np.array(set)))
+
 # TODO: circuit class functions
 
 if __name__ == "__main__":
