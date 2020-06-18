@@ -760,7 +760,6 @@ class circuitEx(Exception):
 s = sympy.Symbol('s')
 
 class circuit():
-
     def __init__(self):
         self.components = []
         self.subsDic = {}
@@ -772,6 +771,133 @@ class circuit():
         self.symbol = {}
         if verbose:
             print('Starting a new circuit')
+
+
+    def addR(self,name,node1,node2,value=None):
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'r'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['v']  = value
+        dict['sy'] = sy
+
+        self.components.append(dict)
+
+        self.symbol[name] = sy
+
+        if value != None:
+            self.subsDic[sy] = value
+        if verbose:
+            if value:
+                print('Resistor',name,'added between nodes',node1,'and',node2,'with value',value)
+            else:
+                print('Resistor',name,'added between nodes',node1,'and',node2)
+        return sy
+
+    def addC(self,name,node1,node2,value=None):
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'c'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['v']  = value
+        dict['sy'] = sy
+
+        self.components.append(dict)
+
+        self.symbol[name] = sy
+
+        if value != None:
+            self.subsDic[sy] = value
+        if verbose:
+            if value:
+                print('Capcitor',name,'added between nodes',node1,'and',node2,'with value',value)
+            else:
+                print('Capacitor',name,'added between nodes',node1,'and',node2)
+        return sy
+
+    def addL(self,name,node1,node2,value=None):
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'l'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['v']  = value
+        dict['sy'] = sy
+
+        self.components.append(dict)
+
+        self.symbol[name] = sy
+
+        if value != None:
+            self.subsDic[sy] = value
+        if verbose:
+            if value:
+                print('Inductor',name,'added between nodes',node1,'and',node2,'with value',value)
+            else:
+                print('Inductor',name,'added between nodes',node1,'and',node2)
+        return sy
+
+    def addV(self,name,node1,node2,value=None):
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'vs'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['v']  = value
+        dict['sy'] = sy
+
+        isy = sympy.Symbol('i'+name)
+        dict['isy'] = isy
+
+        self.name[isy] = 'i'+name
+
+        self.symbol[name] = sy
+        self.symbol['i'+name] = isy
+
+        self.components.append(dict)
+
+        if value != None:
+            self.subsDic[sy] = value
+        if verbose:
+            if value:
+                print('Voltage supply',name,'added between nodes',node1,'and',node2,'with value',value)
+            else:
+                print('Voltage supply',name,'added between nodes',node1,'and',node2)
+        return sy
+
+    def addI(self,name,node1,node2,value=None):
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'is'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['v']  = value
+        dict['sy'] = sy
+
+        self.components.append(dict)
+
+        self.symbol[name] = sy
+
+        if value != None:
+            self.subsDic[sy] = value
+        if verbose:
+            if value:
+                print('Current supply',name,'added between nodes',node1,'and',node2,'with value',value)
+            else:
+                print('Current supply',name,'added between nodes',node1,'and',node2)
+        return sy
 
 # TODO: circuit class functions
 
