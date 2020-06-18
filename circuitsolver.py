@@ -746,6 +746,19 @@ class MyWindow:
         d.draw()
 
 
+verbose = False
+
+class circuitEx(Exception):
+    def __init__(self, msg=""):
+        print('**')
+        print('** Circuit exception')
+        print('**')
+        print('** ' + msg)
+        print('**')
+        print("\n")
+
+s = sympy.Symbol('s')
+
 # TODO: circuit class implementation
 
 if __name__ == "__main__":
