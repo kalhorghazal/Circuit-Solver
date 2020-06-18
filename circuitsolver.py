@@ -761,7 +761,6 @@ class circuit():
         if verbose:
             print('Starting a new circuit')
 
-
     def addR(self,name,node1,node2,value=None):
         sy = sympy.Symbol(name)
 
@@ -996,6 +995,120 @@ class circuit():
             else:
                 print('Current supply',name,'added between nodes',node1,'and',node2)
         return sy
+
+
+    def _numNodes(self):
+        self.nodeList = set([])
+
+        if len(self.components)==0:
+            raise circuitEx('No components in the circuit')
+
+        for component in self.components:
+            self.nodeList.add(component['n1'])
+            self.nodeList.add(component['n2'])
+
+        self.nodeList = list(self.nodeList)
+        if verbose:
+            print('There are',len(self.nodeList),'nodes :')
+            for node in self.nodeList:
+                print('    ',node)
+
+    def _nodeVariables(self):
+        self.nodeVars = {}
+
+        if len(self.nodeList) == 0:
+            raise circuitEx('No nodes in the circuit')
+        if verbose:
+            print('Creating node variables')
+        zeroFound = False
+        for node in self.nodeList:
+            if node == 0:
+                zeroFound = True
+            else:
+                name = 'v'+str(node)
+                ns = sympy.Symbol(name)
+                self.nodeVars[node] = ns
+                self.unknowns.add(ns)
+
+                self.name[ns] = name
+
+                self.symbol[name] = ns
+                if verbose:
+                    print('    ',name)
+        if not zeroFound:
+            raise circuitEx('No 0 node in circuit')
+
+    def _addRtoNode(self,res,eq,node):
+        n1 = res['n1']
+        n2 = res['n2']
+        if n1 == node:
+            if n2 == 0:
+                eq = eq - self.nodeVars[n1]/res['sy']
+            else:
+                eq = eq - (self.nodeVars[n1]-self.nodeVars[n2])/res['sy']
+        if n2 == node:
+            if n1 == 0:
+                eq = eq - self.nodeVars[n2]/res['sy']
+            else:
+                eq = eq - (self.nodeVars[n2]-self.nodeVars[n1])/res['sy']
+        return eq
+
+    def _addCtoNode(self,cap,eq,node):
+        n1 = cap['n1']
+        n2 = cap['n2']
+        if n1 == node:
+            if n2 == 0:
+                eq = eq - cap['sy']*s*self.nodeVars[n1]
+            else:
+                eq = eq - cap['sy']*s*(self.nodeVars[n1]-self.nodeVars[n2])
+        if n2 == node:
+            if n1 == 0:
+                eq = eq - cap['sy']*s*self.nodeVars[n2]
+            else:
+                eq = eq - cap['sy']*s*(self.nodeVars[n2]-self.nodeVars[n1])
+        return eq
+
+    def _addLtoNode(self,ind,eq,node):
+        n1 = ind['n1']
+        n2 = ind['n2']
+        if n1 == node:
+            if n2 == 0:
+                eq = eq - self.nodeVars[n1]/(ind['sy']*s)
+            else:
+                eq = eq - (self.nodeVars[n1]-self.nodeVars[n2])/(ind['sy']*s)
+        if n2 == node:
+            if n1 == 0:
+                eq = eq - self.nodeVars[n2]/(ind['sy']*s)
+            else:
+                eq = eq - (self.nodeVars[n2]-self.nodeVars[n1])/(ind['sy']*s)
+        return eq
+
+    def _addVtoNode(self,vs,eq,node):
+        n1 = vs['n1']
+        n2 = vs['n2']
+        if n1 == node:
+            eq = eq + vs['isy']
+        if n2 == node:
+            eq = eq - vs['isy']
+        return eq
+
+    def _addItoNode(self,isr,eq,node):
+        n1 = isr['n1']
+        n2 = isr['n2']
+        if n1 == node:
+            eq = eq + isr['sy']
+        if n2 == node:
+            eq = eq - isr['sy']
+        return eq
+
+    def _addIMtoNode(self,im,eq,node):
+        n1 = im['n1']
+        n2 = im['n2']
+        if n1 == node:
+            eq = eq + im['sy']
+        if n2 == node:
+            eq = eq - im['sy']
+        return eq
 
 # TODO: circuit class functions
 
