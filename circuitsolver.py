@@ -745,8 +745,18 @@ class MyWindow:
                     l25.color = 'black'
         d.draw()
 
-
 verbose = False
+
+class circuitEx(Exception):
+    def __init__(self, msg=""):
+        print('**')
+        print('** Circuit exception')
+        print('**')
+        print('** ' + msg)
+        print('**')
+        print("\n")
+
+s = sympy.Symbol('s')
 
 class circuit():
     def __init__(self):
@@ -966,7 +976,6 @@ class circuit():
         return sy
 
     def addCIS(self,name,node1,node2,cont,value=None):
-
         try:
             ctr = self.meas[cont]
         except KeyError:
@@ -1139,7 +1148,6 @@ class circuit():
             newList.append(eq.subs(oldS,newS))
         self.equations = newList
 
-
     def _addVequations(self):
         if verbose:
             print('Adding V source equations')
@@ -1181,7 +1189,6 @@ class circuit():
                     self.equations.append(sympy.Eq(cm['sy'],self.nodeVars[n1]-self.nodeVars[n2]))
 
     def _processIM(self):
-
         if verbose:
             print('Adding I measurement equations')
         for cm in self.components:
@@ -1202,14 +1209,12 @@ class circuit():
                     self.unknowns.remove(self.nodeVars[n1])
                     self.nodeVars[n1] = self.nodeVars[n2]
 
-
     def _processCtr(self):
         if verbose:
             print('Processing controlled elements')
         for cm in self.components:
             if cm['k'] == 'cvs' or cm['k'] == 'cis':
                 self._substEqs(cm['sy'],cm['sy']*cm['ctr']['sy'])
-
 
     def _showEquations(self):
         print('Circuit equations:')
@@ -1239,7 +1244,6 @@ class circuit():
             print('    ',self.particular)
 
     def solve(self):
-
         if verbose:
             print('Solving the circuit')
 
@@ -1268,8 +1272,6 @@ def expr2func(expr,*vars):
 def evalList(expr,var,set):
     f = expr2func(expr,var)
     return np.array(f(np.array(set)))
-
-# TODO: circuit class functions
 
 if __name__ == "__main__":
     window = Tk()
