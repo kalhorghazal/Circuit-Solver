@@ -1238,6 +1238,30 @@ class circuit():
             print('Circuit solution with substitutions:')
             print('    ',self.particular)
 
+    def solve(self):
+
+        if verbose:
+            print('Solving the circuit')
+
+        self.equations  = []
+        self.unknowns = set([])
+        self._numNodes()
+        self._nodeVariables()
+        self._addKCLequations()
+        self._addVequations()
+        self._processIM()
+        self._processVM()
+        self._processCtr()
+        if verbose:
+            self._showEquations()
+        self._solveEquations()
+        self._nameSolution()
+        self._substituteSolution()
+        return self.particular
+
+    def subs(self):
+        return self.particular
+
 # TODO: circuit class functions
 
 if __name__ == "__main__":
