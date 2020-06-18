@@ -748,17 +748,6 @@ class MyWindow:
 
 verbose = False
 
-class circuitEx(Exception):
-    def __init__(self, msg=""):
-        print('**')
-        print('** Circuit exception')
-        print('**')
-        print('** ' + msg)
-        print('**')
-        print("\n")
-
-s = sympy.Symbol('s')
-
 class circuit():
     def __init__(self):
         self.components = []
@@ -939,6 +928,73 @@ class circuit():
         self.meas[name] = dict
         if verbose:
             print('Current measurement',name,'added between nodes',node1,'and',node2)
+        return sy
+
+    def addCVS(self,name,node1,node2,cont,value=None):
+        try:
+            ctr = self.meas[cont]
+        except KeyError:
+            raise circuitEx('CVS controller must be defined previously')
+
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'cvs'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['v']  = value
+        dict['sy'] = sy
+        dict['ctr'] = ctr
+
+        isy = sympy.Symbol('i'+name)
+        dict['isy'] = isy
+
+        self.name[isy] = 'i'+name
+
+        self.symbol[name] = sy
+        self.symbol['i'+name] = isy
+
+        self.components.append(dict)
+
+        if value != None:
+            self.subsDic[sy] = value
+        if verbose:
+            if value:
+                print('VcVs',name,'added between nodes',node1,'and',node2,'with value',value)
+            else:
+                print('VcVs',name,'added between nodes',node1,'and',node2)
+        return sy
+
+    def addCIS(self,name,node1,node2,cont,value=None):
+
+        try:
+            ctr = self.meas[cont]
+        except KeyError:
+            raise circuitEx('CIS controller must be defined previously')
+
+        sy = sympy.Symbol(name)
+
+        dict = {}
+        dict['k']  = 'cis'
+        dict['n']  = name
+        dict['n1'] = node1
+        dict['n2'] = node2
+        dict['v']  = value
+        dict['sy'] = sy
+        dict['ctr'] = ctr
+
+        self.components.append(dict)
+
+        self.symbol[name] = sy
+
+        if value != None:
+            self.subsDic[sy] = value
+        if verbose:
+            if value:
+                print('Current supply',name,'added between nodes',node1,'and',node2,'with value',value)
+            else:
+                print('Current supply',name,'added between nodes',node1,'and',node2)
         return sy
 
 # TODO: circuit class functions
