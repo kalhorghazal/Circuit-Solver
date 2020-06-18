@@ -747,7 +747,6 @@ class MyWindow:
 
 
 verbose = False
-
 class circuit():
     def __init__(self):
         self.components = []
@@ -1155,6 +1154,60 @@ class circuit():
                     self.equations.append(sympy.Eq(cm['sy'],self.nodeVars[n1]))
                 else:
                     self.equations.append(sympy.Eq(cm['sy'],self.nodeVars[n1]-self.nodeVars[n2]))
+
+    def _processVM(self):
+        if verbose:
+            print('Adding V measurement equations')
+        for cm in self.components:
+            if cm['k']=='vm':
+
+                self.unknowns.add(cm['sy'])
+                n1 = cm['n1']
+                n2 = cm['n2']
+                if   n1 == 0:
+                    self._substEqs(self.nodeVars[n2],-cm['sy'])
+                    try:
+                        self.unknowns.remove(self.nodeVars[n2])
+                    except KeyError:
+                        self.equations.append(sympy.Eq(cm['sy'],self.nodeVars[n2]))
+                elif n2 == 0:
+                    self._substEqs(self.nodeVars[n1],cm['sy'])
+                    try:
+                        self.unknowns.remove(self.nodeVars[n1])
+                    except KeyError:
+                        self.equations.append(sympy.Eq(cm['sy'],self.nodeVars[n1]))
+                else:
+                    self.equations.append(sympy.Eq(cm['sy'],self.nodeVars[n1]-self.nodeVars[n2]))
+
+    def _processIM(self):
+
+        if verbose:
+            print('Adding I measurement equations')
+        for cm in self.components:
+            if cm['k']=='im':
+                self.unknowns.add(cm['sy'])
+                n1 = cm['n1']
+                n2 = cm['n2']
+                if n1 == 0:
+                    self._substEqs(self.nodeVars[n2],0)
+                    self.unknowns.remove(self.nodeVars[n2])
+                    self.nodeVars[n2] = 0
+                elif n2 == 0:
+                    self._substEqs(self.nodeVars[n1],0)
+                    self.unknowns.remove(self.nodeVars[n1])
+                    self.nodeVars[n1] = 0
+                else:
+                    self._substEqs(self.nodeVars[n1],self.nodeVars[n2])
+                    self.unknowns.remove(self.nodeVars[n1])
+                    self.nodeVars[n1] = self.nodeVars[n2]
+
+
+    def _processCtr(self):
+        if verbose:
+            print('Processing controlled elements')
+        for cm in self.components:
+            if cm['k'] == 'cvs' or cm['k'] == 'cis':
+                self._substEqs(cm['sy'],cm['sy']*cm['ctr']['sy'])
 
 # TODO: circuit class functions
 
