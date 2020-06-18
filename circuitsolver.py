@@ -759,7 +759,21 @@ class circuitEx(Exception):
 
 s = sympy.Symbol('s')
 
-# TODO: circuit class implementation
+class circuit():
+
+    def __init__(self):
+        self.components = []
+        self.subsDic = {}
+        self.meas = {}
+        self.sSolution = None
+        self.solution = None
+        self.particular = None
+        self.name = {}
+        self.symbol = {}
+        if verbose:
+            print('Starting a new circuit')
+
+# TODO: circuit class functions
 
 if __name__ == "__main__":
     window = Tk()
